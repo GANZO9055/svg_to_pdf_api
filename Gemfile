@@ -36,4 +36,5 @@ gem "thruster", require: false
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'pdf-reader'
 end
