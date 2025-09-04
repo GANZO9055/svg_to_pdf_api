@@ -1,0 +1,53 @@
+<h1>Конвертация SVG в PDF</h1>
+
+<form id="svg-form">
+  <label for="svg_file">Выберите SVG файл:</label>
+  <input type="file" id="svg_file" name="svg_file" accept=".svg" required>
+  <br><br>
+
+  <label for="watermark">Водяной знак:</label>
+  <input type="text" id="watermark" name="watermark" placeholder="Ваш текст">
+  <br><br>
+
+  <button type="submit">Сконвертировать в PDF</button>
+</form>
+
+<div id="result" style="margin-top:20px;"></div>
+
+<script>
+    document.getElementById('svg-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData();
+        const svgFile = document.getElementById('svg_file').files[0];
+        const watermark = document.getElementById('watermark').value;
+
+        if (!svgFile) return alert("Выберите SVG файл");
+
+        formData.append('svg_file', svgFile);
+        formData.append('watermark', watermark);
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = "Генерация PDF...";
+
+        try {
+            const response = await fetch('/api/v1/pdfs', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                const url = data.data.attributes.download_url;
+                resultDiv.innerHTML = `<a href="${url}" download>Скачать PDF</a>`;
+            } else {
+                resultDiv.innerHTML = "Ошибка: " + JSON.stringify(data.errors);
+            }
+        } catch (err) {
+            resultDiv.innerHTML = "Ошибка: " + err.message;
+        }
+    });
+</script>
+
