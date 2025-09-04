@@ -1,0 +1,53 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/pdfs":
+    post:
+      summary: Конвертирует SVG в PDF
+      tags:
+      - PDFs
+      parameters: []
+      responses:
+        '200':
+          description: PDF создан
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      id:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          download_url:
+                            type: string
+                        required:
+                        - download_url
+                    required:
+                    - type
+                    - id
+                    - attributes
+                required:
+                - data
+        '400':
+          description: svg_file не передан
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: file
+        description: SVG файл
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
