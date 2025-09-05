@@ -7,4 +7,4 @@ RUN bundle install
 COPY . .
 
 EXPOSE 8080
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["bundle", "exec", "puma", "-b", "tcp://0.0.0.0:8080", "-e", "development"]
