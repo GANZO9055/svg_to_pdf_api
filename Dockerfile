@@ -6,7 +6,6 @@ RUN bundle install
 
 COPY . .
 
-ENV SECRET_KEY_BASE=secret_key
-
 EXPOSE 3000
+
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

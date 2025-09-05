@@ -6,6 +6,8 @@ Rails.application.configure do
   config.hosts << "10.160.19.54"
   config.hosts << ".dockhost.ru"
 
+  config.secret_key_base = ENV['SECRET_KEY_BASE']
+
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
