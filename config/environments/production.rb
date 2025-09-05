@@ -3,8 +3,7 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.hosts.clear
-  config.hosts << ENV.fetch("RAILS_HOST") { "0.0.0.0" }
+  config.hosts << ENV.fetch("RAILS_HOST") { nil }
   config.secret_key_base = ENV['SECRET_KEY_BASE']
 
   # Code is not reloaded between requests.
